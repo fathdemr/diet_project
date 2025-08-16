@@ -74,7 +74,7 @@ https://templatemo.com/tm-562-space-dynamic
                   <a href="#about">Hakkımızda</a>
                 </li>
                 <li class="scroll-to-section">
-                  <a href="#services">Hizmetlerimiz</a>
+                  <a href="#services">Keşfet</a>
                 </li>
                 <li class="scroll-to-section"><a href="#blog">Blog</a></li>
                 <li class="scroll-to-section">
@@ -82,7 +82,7 @@ https://templatemo.com/tm-562-space-dynamic
                 </li>
                 <li class="scroll-to-section">
                   <div class="main-red-button">
-                    <a href="#contact">Bilgi Alın</a>
+                    <a href="#">Giriş Yap/Kaydol</a>
                   </div>
                 </li>
               </ul>
@@ -119,20 +119,9 @@ https://templatemo.com/tm-562-space-dynamic
                     birleştiği platform. Hedefinize ulaşmanız için her adımda
                     yanınızdayız.
                   </p>
-                  <form id="search" action="#" method="GET">
-                    <fieldset>
-                      <input
-                        type="address"
-                        name="address"
-                        class="email"
-                        placeholder="Vücut Kitle Endeksinizi Hesaplayın"
-                        autocomplete="on"
-                      />
-                    </fieldset>
-                    <fieldset>
-                      <button type="submit" class="main-button">Hesapla</button>
-                    </fieldset>
-                  </form>
+
+                  <a id="openPopup" class="main-button" href="#">Hadi Başla</a>
+                  <!-- Modal (başta gizli) -->
                 </div>
               </div>
               <div class="col-lg-6">
@@ -148,6 +137,96 @@ https://templatemo.com/tm-562-space-dynamic
           </div>
         </div>
       </div>
+      <div id="popupModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div id="popupBody">Yükleniyor...</div>
+        </div>
+      </div>
+
+      <style>
+        /* Modal stil */
+        .modal {
+          display: none; /* gizli */
+          position: fixed;
+          z-index: 9999;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background: rgba(0, 0, 0, 0.6);
+          overflow: hidden !important;
+        }
+
+        /* İçerik kutusu */
+        .modal-content {
+          background: #fff;
+          margin: 10% auto;
+          padding: 20px;
+          border-radius: 12px;
+          width: 80%;
+          max-width: 800px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+          color: #333;
+          float: right;
+          font-size: 24px;
+          cursor: pointer;
+        }
+      </style>
+
+      <script>
+        const modal = document.getElementById("popupModal");
+        const popupBody = document.getElementById("popupBody");
+
+        document
+          .getElementById("openPopup")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            modal.style.display = "block";
+
+            // Sayfa kaymasını engelle
+            document.body.style.overflow = "hidden";
+
+            // popup.html içeriğini yükle
+            fetch("popup.html")
+              .then((response) => response.text())
+              .then((data) => {
+                popupBody.innerHTML = data;
+              })
+              .catch((err) => {
+                popupBody.innerHTML = "<p>İçerik yüklenemedi!</p>";
+                console.error(err);
+              });
+          });
+
+        // Escape tuşu ile modalı kapatma
+        const closeModal = (e) => {
+          if (e.key === "Escape" && modal.style.display === "block") {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+          }
+        };
+
+        window.addEventListener("keydown", closeModal);
+
+        // Kapatma düğmesi
+        document.querySelector(".close").addEventListener("click", function () {
+          modal.style.display = "none";
+          document.body.style.overflow = "auto";
+        });
+
+        // Modal dışında tıklayınca kapatma
+        window.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto"; // sayfa kaymasını geri aç
+          }
+        });
+      </script>
     </div>
 
     <div id="about" class="about-us section">
@@ -181,7 +260,7 @@ https://templatemo.com/tm-562-space-dynamic
                       />
                     </div>
                     <div class="right-text">
-                      <h4>Kişisek Sağlık Takibi</h4>
+                      <h4>Kişisel Sağlık Takibi</h4>
                       <p>Sağlığınızı kolayca takip edin</p>
                     </div>
                   </div>
@@ -302,162 +381,88 @@ https://templatemo.com/tm-562-space-dynamic
           </div>
         </div>
       </div>
-
-      <div id="user-section" class="user-section section">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-              <div
-                class="section-heading wow bounceIn"
-                data-wow-duration="1s"
-                data-wow-delay="0.2s"
-              >
-                <h2>Size Nasıl Yardımcı Olabiliriz?</h2>
-              </div>
-            </div>
-          </div>
-
-          <section class="platform-section">
-            <!-- Kullanıcı tarafı -->
-            <div class="column user-side">
-              <div class="icon-circle">📄</div>
-              <h2>Diyet Listesi İstiyorum</h2>
-              <p>
-                Kendi yaşam tarzınıza uygun, tamamen kişiselleştirilmiş diyet
-                listenizi uzman diyetisyenlerimizden alın.
-              </p>
-              <a href="#" class="btn green-btn">Diyet Listemi Oluştur</a>
-            </div>
-
-            <!-- Diyetisyen tarafı -->
-            <div class="column dietitian-side">
-              <div class="icon-circle">👩‍⚕️</div>
-              <h2>Ben Diyetisyenim</h2>
-              <p>
-                Uzmanlığınızı paylaşın, profilinizi oluşturun ve size en uygun
-                danışanlarla eşleşin.
-              </p>
-              <a href="#" class="btn orange-btn">Diyetisyen Olarak Katıl</a>
-            </div>
-          </section>
-        </div>
-      </div>
     </div>
 
-    <div id="blog" class="our-blog section">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-lg-6 wow fadeInDown"
-            data-wow-duration="1s"
-            data-wow-delay="0.25s"
-          >
-            <div class="section-heading">
-              <h2>
-                Check Out What Is <em>Trending</em> In Our Latest
-                <span>News</span>
-              </h2>
-            </div>
+    <!-- Blog Bölümü Başlangıç -->
+
+    <div id="blog">
+      <section id="blog-section">
+        <div class="blog-container">
+          <div class="blog-heading">
+            <h2>Sağlıklı <span class="highlight">Yaşam</span></h2>
+            <p>
+              Sağlıklı yaşam için ipuçları, diyet listeleri ve uzman
+              görüşleriyle dolu blog yazılarımızı keşfedin.
+            </p>
           </div>
-          <div
-            class="col-lg-6 wow fadeInDown"
-            data-wow-duration="1s"
-            data-wow-delay="0.25s"
-          >
-            <div class="top-dec">
-              <img src="assets/images/blog-dec.png" alt="" />
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div
-            class="col-lg-6 wow fadeInUp"
-            data-wow-duration="1s"
-            data-wow-delay="0.25s"
-          >
-            <div class="left-image">
-              <a href="#"
-                ><img
-                  src="assets/images/big-blog-thumb.jpg"
-                  alt="Workspace Desktop"
-              /></a>
-              <div class="info">
-                <div class="inner-content">
-                  <ul>
-                    <li><i class="fa fa-calendar"></i> 24 Mar 2021</li>
-                    <li><i class="fa fa-users"></i> TemplateMo</li>
-                    <li><i class="fa fa-folder"></i> Branding</li>
-                  </ul>
-                  <a href="#"><h4>SEO Agency &amp; Digital Marketing</h4></a>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur and sed doer ket
-                    eismod tempor incididunt ut labore et dolore magna...
-                  </p>
-                  <div class="main-blue-button">
-                    <a href="#">Discover More</a>
-                  </div>
-                </div>
+
+          <div class="blog-grid">
+            <!-- Kart 1 -->
+            <article class="blog-card">
+              <div class="thumb" style="background-color: #fcdde1">
+                <img
+                  src="https://picsum.photos/seed/freelance1/800/450"
+                  alt="Düşük bütçeli girişimler illüstrasyonu"
+                />
               </div>
-            </div>
+              <div class="content">
+                <span class="badge">Girişimcilik</span>
+                <h3 class="title">
+                  <a href="#"
+                    >Düşük Bütçeli Girişimciler Neden Freelancer’larla
+                    Çalışmalı?</a
+                  >
+                </h3>
+              </div>
+            </article>
+
+            <!-- Kart 2 -->
+            <article class="blog-card">
+              <div class="thumb" style="background-color: #ddf4ff">
+                <img
+                  src="https://picsum.photos/seed/freelance2/800/450"
+                  alt="Proje başlangıcı illüstrasyonu"
+                />
+              </div>
+              <div class="content">
+                <span class="badge">Girişimcilik</span>
+                <h3 class="title">
+                  <a href="#"
+                    >Projenin Başında Freelancer’a Hangi Detayları
+                    Vermelisin?</a
+                  >
+                </h3>
+              </div>
+            </article>
+
+            <!-- Kart 3 -->
+            <article class="blog-card">
+              <div class="thumb" style="background-color: #e9e3ff">
+                <img
+                  src="https://picsum.photos/seed/freelance3/800/450"
+                  alt="Freelancer ile çalışma illüstrasyonu"
+                />
+              </div>
+              <div class="content">
+                <span class="badge">Girişimcilik</span>
+                <h3 class="title">
+                  <a href="#"
+                    >Freelancer’larla Çalışırken Yapılması ve Yapılmaması
+                    Gerekenler</a
+                  >
+                </h3>
+              </div>
+            </article>
           </div>
-          <div
-            class="col-lg-6 wow fadeInUp"
-            data-wow-duration="1s"
-            data-wow-delay="0.25s"
-          >
-            <div class="right-list">
-              <ul>
-                <li>
-                  <div class="left-content align-self-center">
-                    <span><i class="fa fa-calendar"></i> 18 Mar 2021</span>
-                    <a href="#"><h4>New Websites &amp; Backlinks</h4></a>
-                    <p>
-                      Lorem ipsum dolor sit amsecteturii and sed doer ket
-                      eismod...
-                    </p>
-                  </div>
-                  <div class="right-image">
-                    <a href="#"
-                      ><img src="assets/images/blog-thumb-01.jpg" alt=""
-                    /></a>
-                  </div>
-                </li>
-                <li>
-                  <div class="left-content align-self-center">
-                    <span><i class="fa fa-calendar"></i> 14 Mar 2021</span>
-                    <a href="#"><h4>SEO Analysis &amp; Content Ideas</h4></a>
-                    <p>
-                      Lorem ipsum dolor sit amsecteturii and sed doer ket
-                      eismod...
-                    </p>
-                  </div>
-                  <div class="right-image">
-                    <a href="#"
-                      ><img src="assets/images/blog-thumb-01.jpg" alt=""
-                    /></a>
-                  </div>
-                </li>
-                <li>
-                  <div class="left-content align-self-center">
-                    <span><i class="fa fa-calendar"></i> 06 Mar 2021</span>
-                    <a href="#"><h4>SEO Tips &amp; Digital Marketing</h4></a>
-                    <p>
-                      Lorem ipsum dolor sit amsecteturii and sed doer ket
-                      eismod...
-                    </p>
-                  </div>
-                  <div class="right-image">
-                    <a href="#"
-                      ><img src="assets/images/blog-thumb-01.jpg" alt=""
-                    /></a>
-                  </div>
-                </li>
-              </ul>
-            </div>
+
+          <div class="cta-wrap">
+            <a class="cta-link" href="#">Tüm Yazılar</a>
           </div>
         </div>
-      </div>
+      </section>
     </div>
+
+    <!-- Blog Bölümü Bitiş -->
 
     <div id="contact" class="contact-us section">
       <div class="container">
